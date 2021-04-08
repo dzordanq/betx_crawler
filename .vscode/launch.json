@@ -1,0 +1,18 @@
+{
+    
+    "configurations": [
+        {
+            "name": "Python: Main",
+            "type": "python",
+            "request": "launch",
+            "program": "main.py",
+            "console": "integratedTerminal",
+            "variablePresentation": {
+                "class": "hide",
+                "special": "hide",
+                "function": "hide",
+                "protected": "hide"
+            },
+        }
+    ],
+}

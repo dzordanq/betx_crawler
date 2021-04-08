@@ -1,0 +1,54 @@
+- name: Koszykówka
+  translatedName: basketball
+  markets:
+    - name: Gracz - punkty(ŁĄCZNIE Z DOG.)
+      match: exact
+      translatedName: pointsTotal
+      strategy: multiwayPlayerBet
+
+    # - name: Gracz - asysty(ŁĄCZNIE Z DOG.)
+    #   match: exact
+    #   translatedName: assistsTotal
+    #   strategy: multiwayPlayerBet
+
+    # - name: Gracz - zbiórki(ŁĄCZNIE Z DOG.)
+    #   match: exact
+    #   translatedName: reboundsTotal
+    #   strategy: multiwayPlayerBet
+
+    # - name: Liczba celnych rzutów za 3
+    #   match: exact
+    #   translatedName: threePointsThrowsTotal
+    #   strategy: multiwayPlayerBet
+
+    - name: Zawodnik ilość punktów co najmniej (łącznie z dog.)
+      match: exact
+      translatedName: pointsTotal
+      strategy: multiwayPlayerBet
+
+    # - name: Zawodnik ilość asyst co najmniej
+    #   match: exact
+    #   translatedName: assistsOver
+    #   strategy: multiwayPlayerBet
+
+    # - name: Zawodnik ilość bloków co najmniej (łącznie z dog.)
+    #   match: exact
+    #   translatedName: blocksOver
+    #   strategy: multiwayPlayerBet
+
+    # - name: Zawodnik ilość zbiórek co najmniej (łącznie z dog.)
+    #   match: exact
+    #   translatedName: reboundsOver
+    #   strategy: multiwayPlayerBet
+
+    # - name: Zawodnik ilość przechwytów co najmniej(łącznie z dog.)
+    #   match: exact
+    #   translatedName: stealsOver
+    #   strategy: multiwayPlayerBet
+
+    # - name: Zawodnik ilość celnych rz. za 3pkt. co najmniej(łącznie z dog.)
+    #   match: exact
+    #   translatedName: threePointsThrowsOver
+    #   strategy: multiwayPlayerBet
+
+
