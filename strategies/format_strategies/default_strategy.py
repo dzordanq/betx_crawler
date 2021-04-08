@@ -6,5 +6,6 @@ class DefaultStrategy(FormatStrategy):
 
 
     def append_market(self, caller, parsed_market):
-        caller.response[self.strategy]['markets'].append(parsed_market) if parsed_market else None
+        if parsed_market:
+            caller.response[self.strategy]['markets'][caller.market_name].extend(parsed_market)
 
