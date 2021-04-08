@@ -1,10 +1,11 @@
 - name: Koszykówka
   translatedName: basketball
   markets:
-    - name: Gracz - punkty(ŁĄCZNIE Z DOG.)
-      match: exact
-      translatedName: pointsTotal
-      strategy: multiwayPlayerBet
+    # TEMPORARY COLIDING WITH STRATEGY V1
+    # - name: Gracz - punkty(ŁĄCZNIE Z DOG.)
+    #   match: exact
+    #   translatedName: pointsTotal
+    #   strategy: multiwayPlayerBet
 
     # - name: Gracz - asysty(ŁĄCZNIE Z DOG.)
     #   match: exact
@@ -15,6 +16,26 @@
     #   match: exact
     #   translatedName: reboundsTotal
     #   strategy: multiwayPlayerBet
+      
+    - name: Gracz - punkty(ŁĄCZNIE Z DOG.)
+      match: exact
+      translatedName: pointsTotal
+      strategy: v1
+
+    - name: Gracz - asysty(ŁĄCZNIE Z DOG.)
+      match: exact
+      translatedName: assistsTotal
+      strategy: v1
+
+    - name: Gracz - zbiórki(ŁĄCZNIE Z DOG.)
+      match: exact
+      translatedName: reboundsTotal
+      strategy: v1
+
+    - name: Celne rzuty za 3pkt.
+      match: exact
+      translatedName: threePointsThrows
+      strategy: v1
 
     # - name: Liczba celnych rzutów za 3
     #   match: exact
@@ -52,3 +73,20 @@
     #   strategy: multiwayPlayerBet
 
 
+    # - name: 
+    #   match: exact
+    #   translatedName: 
+    #   strategy: default
+
+- name: Piłka Nożna
+  translatedName: football
+  markets:
+    - name: Ilość kartek
+      match: exact
+      translatedName: cardsTotal
+      strategy: default
+
+    - name: Ilość rz.rożnych (-/+)
+      match: exact
+      translatedName: cornersTotal
+      strategy: default
