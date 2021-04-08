@@ -22,4 +22,6 @@ class MultiWayPlayerBetStrategy(FormatStrategy):
             in {tuple(d.items())
             for d in market_list}
         ]
-        caller.response[self.strategy][caller.player_name]['markets'] = market_list
+        caller.response[self.strategy][caller.player_name]['markets'][caller.market_name] = market_list
+
+      
