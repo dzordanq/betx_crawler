@@ -1,12 +1,11 @@
-from datetime import datetime
+from datetime import datetime, timezone
 from copy import deepcopy
 from collections import defaultdict, OrderedDict
-from typing import DefaultDict
-from strategies.format_strategies import strategy
+from typing import DefaultDict 
 from strategies.format_strategies.strategy import FormatStrategy
+from strategies.format_strategies import MultiWayPlayerBetStrategy, DefaultStrategy, V1Strategy
 
-from strategies.format_strategies import MultiWayPlayerBetStrategy, DefaultStrategy
-
+local_timezone = datetime.now().astimezone().tzinfo
 
 class Parser:
     def __init__(self, config) -> None:
@@ -14,19 +13,22 @@ class Parser:
         self.strategy: FormatStrategy = None
         self.strategies = {
             'default': DefaultStrategy('default'),
-            'multiwayPlayerBet': MultiWayPlayerBetStrategy('multiwayPlayerBet')
+            'multiwayPlayerBet': MultiWayPlayerBetStrategy('multiwayPlayerBet'),
+            'v1': V1Strategy('v1')
         }
         self.player_name: str = ''
 
     def parse(self, event):
         self.response = {
             'default': None,
-            'multiwayPlayerBet': {}
+            'multiwayPlayerBet': {},
+            'v1': None
         }
         event_info = self._get_event_info(event)
         if event_info:
             self.event_info = event_info
             self.response['default'] = deepcopy(event_info)
+            self.response['v1'] = deepcopy(event_info)
             for market in event['Offers']:
                 parsed_market = self._parse_market(market)
                 if parsed_market:
@@ -35,6 +37,7 @@ class Parser:
             
             return {
                 "default": self.response['default'],
+                "v1": self.response['v1'],
                 "multiwayPlayerBet": [
                     {
                         **p,
@@ -44,8 +47,7 @@ class Parser:
                                 "bets": market_value
                             } for market_name, market_value in p['markets'].items()]
                         
-                    } for p in self.response['multiwayPlayerBet'].values()
-                ]
+                    } for p in self.response['multiwayPlayerBet'].values()]
             }
 
 
@@ -55,12 +57,13 @@ class Parser:
         sport = event['SportName']
         if sport in self.config:
             self.sport = self.config[sport]
-            date, hour = event['MatchStartTime'].split("T")
+            date = datetime.fromisoformat(event['MatchStartTime'][:-1])
+            date = date.replace(tzinfo=timezone.utc).astimezone(tz=local_timezone)
             return {
                 "homeName": self.home_name,
                 "awayName": self.away_name,
-                "date": date,
-                "hour": hour.replace("Z", ""),
+                "date": date.strftime("%Y-%m-%d"),
+                "hour": date.strftime("%H:%M"),
                 "competition": event['LeagueName'],
                 "country": event['CategoryName'],
                 "sport": self.sport['translatedName'],
@@ -77,7 +80,7 @@ class Parser:
             self.strategy = self.strategies[strategy]
 
             self.line = market.get('Sbv')
-            self.player_name = market.get('SbvText')
+            self.player_name = market.get('SbvText').replace(",","") if market.get('SbvText') else None
             outcomes = []
             for outcome in market['Odds']:
                 parsed_outcome = self._parse_outcome(outcome)
