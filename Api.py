@@ -47,6 +47,27 @@ class BetX:
             return {}
 
 
+    async def get_le_events(self):
+        payload = {
+           "Offset":0,
+           "Limit":50,
+           "SportIds":[388],
+           "CategoryIds":[2417],
+           "LeagueIds":[18028],
+           "DateFrom":"2021-04-08T15:39:19.103Z",
+           "DateTo":"2022-02-01T23:00:00.103Z"
+        }
+        url = 'https://sportbettingapi.ebetx.pl/api/sport/offer/v2/sports/offer'
+
+        async with request('POST', url, headers=self.headers, data=json.dumps(payload)) as response:
+            data = await response.json()
+
+        if data['Count'] > 0:
+            return data['Response']
+        else:
+            return {}
+
+
     async def get_event_details(self, event_id):
         payload = {"MatchId": event_id}
         url = 'https://sportbettingapi.ebetx.pl/api/sport/offer/v2/match/offers'
